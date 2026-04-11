@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     
     @GetMapping("/order")
-    public String order()
+    public String order(@RequestParam String item)
     {
-
+        return "Your order for " + item + " has been received";
     }
 
 }

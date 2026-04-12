@@ -77,6 +77,8 @@ In this implementation, when a container is redeployed it will pull the github r
     + Use of a Postgre database would remove the requirement for the credentials to be stored in the container of the server.
 + Multi-user Capabilities
     + The server can only currently check for one specific username and password. It would be cool to add the ability to check for multiple users with different usernames and passwords.
++ MFA
+    + Multi factor authentication would improve the security of the account, and would help mitigate risk even if the password were to leak.
 
 ## What I learned
 ### Software hardening

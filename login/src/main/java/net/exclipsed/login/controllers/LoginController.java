@@ -21,8 +21,8 @@ public class LoginController {
 	//private static final String STORED_HASH_B64 = "291h1jB/C7RzwqvO1gVAIy+iilOZhg7A/rk+Nk5Yc/s=";
 
     private static final String STORED_USERNAME = "ImAHackerBTW";
-    private static final String STORED_SALT_B64 = "44MhG4rW8BFORno0JMYbrw==";
-	private static final String STORED_HASH_B64 = "3sPe58KF40NQdN+hES/kUn5hWf10HDNGoRYXdCNppys=";
+    private static final String STORED_SALT_B64 = "";
+	private static final String STORED_HASH_B64 = "";
 
     @GetMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password)
@@ -41,7 +41,7 @@ public class LoginController {
         try
         {
             computedHash = hash(password);
-            System.out.println("pass: " + computedHash);
+            //System.out.println("pass: " + computedHash);
         }
         catch(TypeMismatchException tme)
         {
@@ -104,7 +104,7 @@ public class LoginController {
 	{
         if(a.length() != b.length())
         {
-            System.out.println("Length mismatch");
+            //System.out.println("Length mismatch");
             return false;
         }
 		int diff = 0;
@@ -115,7 +115,7 @@ public class LoginController {
 			// the | is like the -= operator, it's basically or-ing the current result and the values that are being computed, so if there is anything that doesn't match up, it will catch it.
 			diff |= a.charAt(i) ^ b.charAt(i);
 		}
-        System.out.println(diff);
+        //System.out.println(diff);
 		return diff == 0;
 	}
 

@@ -1,5 +1,5 @@
 # Defines all of the containers/services used in this project
-service:
+services:
    # The name of this particular container/service
    login-app:
       # Tell compose to build the image from source instead of pulling from docker hub

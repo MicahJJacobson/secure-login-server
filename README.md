@@ -10,19 +10,35 @@ The source code for the client is contained in the `client` directory. If the se
 
 ## Security Controls Implemented
 + Hashing
-    + Used PBKDF2 as the hashing algorithm in order to slow down brute force attacks if the attacker were to ever gain access to the hashes
+    + Used PBKDF2 as the hashing algorithm in order to slow down brute force attacks if the attacker were to ever gain access to the hashes.
 + Salting
     + Salting is implemented into this algorithm to prevent the use of rainbow tables if the hash were to ever be accessed
-    + Likely not necessary for the implemented credentials, but could prove useful if the user wanted to create their own password that could be susceptible to rainbow tables
+    + Likely not necessary for the implemented credentials, but could prove useful if the user wanted to create their own password that could be susceptible to rainbow tables.
 + Constant Time Execution
-    + Implemented an algorithm which compares the hashes in constant time, no matter the placement of the letter\(s\) that are off
+    + Implemented an algorithm which compares the hashes in constant time, no matter the placement of the letter\(s\) that are off.
 + Branch Prediction Mitigation
-    + Modern CPUs use branch prediction to improve execution speed, which will fetch instructions from system memory and place then inside of the CPU cache based on which code it believes will run next. This can be used by threat actors to perform a timing attack
-    + To prevent timing attacks using branch prediction, every character in the stored hash and the computed hash are compared using bitwise operations. This ensures that there is no program branching occurring at all
+    + Modern CPUs use branch prediction to improve execution speed, which will fetch instructions from system memory and place then inside of the CPU cache based on which code it believes will run next. This can be used by threat actors to perform a timing attack.
+    + To prevent timing attacks using branch prediction, every character in the stored hash and the computed hash are compared using bitwise operations. This ensures that there is no program branching occurring at all.
++ Input Validation
+    + Ensures that the username and password entered are less than 64 and 256 characters long respectively.
+    + Without this, DoS attacks would be possible if the user entered a 10MB password for example, which would need to be iterated over 310,000 times.
  
 ## Possible Improvements
 + Nonce Implementation
     + The current version of the program is susceptible to replay attacks.
-    + The implementation of nonces using tick or something else would be useful
+    + The implementation of nonces using tick or something else would be useful.
 + HTTPS
     + Currently, I do not have SSL certificates set up, so these requests are going over HTTP which means that if I get the right password, that password has been passed over the internet unencrypted, which is bad for obvious reasons.
++ Rate Limiting
+    + Currently there is no rate limiting in place for this server other than the speed of the hashing algorithm.
+    + Possible rate limiting solutions
+        + Account Lockout
+        + Exponetial Delay
+        + IP Lockout
++ Post Request
+    + Current version of the code uses a GET request, which is logged by many systems.
+    + Implementation of a POST request and a request body would prevent the username and password from being logged.
++ Postgre Database
+    + Use of a Postgre database would remove the requirement for the credentials to be stored in the container of the server.
++ Multi-user Capabilities
+    + The server can only currently check for one specific username and password. It would be cool to add the ability to check for multiple users with different usernames and passwords.

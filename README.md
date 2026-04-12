@@ -8,4 +8,4 @@ The source code for this project is contained in the `/src` directory, inside of
 
 ## Security Controls Implemented
 + Hashing
- + Used PBKDF2 as the hashing algorithm in order to slow down brute force attacks if the attacker were to ever gain access to the hashes
+    + Used PBKDF2 as the hashing algorithm in order to slow down brute force attacks if the attacker were to ever gain access to the hashes

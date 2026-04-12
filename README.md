@@ -25,7 +25,7 @@ The source code for the client is contained in the `client` directory. If the se
  
 ## How does it work?
 
-`Client -> Cloudflare DNS -> Nginx Reverse Proxy -> Wireguard VPN Tunnel to Firewall -> Docker Container -> Java Based HTTP Server`
+![]("SecureLoginServer_Request_Pipeline_Flow.drawio.png")
 
 + Client
     + Client will take in a username and password

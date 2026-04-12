@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import tools.jackson.core.ObjectReadContext.Base;
 
+import java.util.*;
+import java.io.*;
+
 @RestController
 public class LoginController {
     
@@ -17,16 +20,27 @@ public class LoginController {
 	// Stored credentials: username -> (salt, hash)
 	// The salt is random per-user; the hash is SHA-256(salt || password).
 
-	//private static final String STORED_USERNAME = "NotAHackerBTW";
-	//private static final String STORED_HASH_B64 = "291h1jB/C7RzwqvO1gVAIy+iilOZhg7A/rk+Nk5Yc/s=";
+	//private static final String storedUsername = "NotAHackerBTW";
+	//private static final String storedHashB64 = "291h1jB/C7RzwqvO1gVAIy+iilOZhg7A/rk+Nk5Yc/s=";
 
-    private static final String STORED_USERNAME = "ImAHackerBTW";
-    private static final String STORED_SALT_B64 = "";
-	private static final String STORED_HASH_B64 = "";
+    //stored in the format of username:salt:passwordhash
+    private static String storedUsername;
+    private static String storedSaltB64;
+	private static String storedHashB64;
 
     @GetMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password)
+    public String login(@RequestParam String username, @RequestParam String password) throws IOException
     {
+        Scanner fileScanner = new Scanner(new File("credentials.txt"));
+
+        String[] credentials = fileScanner.next().split(":");
+
+        fileScanner.close();
+
+        storedUsername = credentials[0];
+        storedSaltB64 = credentials[1];
+        storedHashB64 = credentials[2];
+
 		String computedHash = "";
         /*
         byte[] saltBytes = new byte[16];
@@ -54,7 +68,7 @@ public class LoginController {
         }
 
 		// constant-time comparison to avoid timing attacks
-		if (username.equals(STORED_USERNAME) && constantTimeEquals(computedHash, STORED_HASH_B64)) 
+		if (username.equals(storedUsername) && constantTimeEquals(computedHash, storedHashB64)) 
 		{
 			System.out.println("login Successful");
             return "Login successful!";
@@ -79,7 +93,7 @@ public class LoginController {
 
 	private static String hash(String password) throws Exception 
 	{
-        byte[] salt = Base64.getDecoder().decode(STORED_SALT_B64);
+        byte[] salt = Base64.getDecoder().decode(storedSaltB64);
 
         PBEKeySpec spec = new PBEKeySpec(
             //310_000 is for readability, java ignores the underscores

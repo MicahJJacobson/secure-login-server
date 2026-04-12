@@ -4,7 +4,7 @@ We were required to make a login server in my security class using Java. I wante
 
 With this setup, the server can control any rate limiting that is desired. I did not set up rate limiting, but it would be possible with this setup.
 
-The source code for this project is contained in the /src directory, inside of multiple nested directories.
+The source code for this project is contained in the `/src directory`, inside of multiple nested directories.
 
 ## Security Controls Implemented
 + Hashing

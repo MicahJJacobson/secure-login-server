@@ -92,7 +92,7 @@ I learned how to implement
 + Input Validation
 
 ### HTTP Servers
-While I've worked with and hosted HTTP servers in the past, I have only had minimal experience working with the creation of HTTP requests and have had no experience creating an actual server using code
+While I've worked with and hosted HTTP servers in the past, I have only had minimal experience working with the creation of HTTP requests and have had no experience creating an actual server using code.
 
 I learned
 + How an HTTP GET request is formatted
@@ -103,7 +103,7 @@ I learned
 + Security of GET vs POST requests
 
 ### Docker
-I have some experience working with Docker previously, but I had never built a docker image from scratch, nor had I ever created a docker compose file
+I have previous experience working in Docker, however, prior to this project I had never built a Docker image from scratch or written a docker compose file.
 
 I learned
 + How to write a Dockerfile

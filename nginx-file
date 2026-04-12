@@ -1,0 +1,10 @@
+Server {
+  listen 80;
+  server_name secureloginserver.exclipsed.net;
+
+  location / {
+    proxy_pass http://myinternalip:port;
+    proxy_set_header Host $host;
+    proxy_set_header X-REAL-IP $remote_addr;
+  }
+}

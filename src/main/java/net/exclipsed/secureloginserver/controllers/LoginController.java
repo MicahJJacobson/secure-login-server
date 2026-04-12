@@ -1,25 +1,16 @@
-package net.exclipsed.login.controllers;
+package net.exclipsed.secureloginserver.controllers;
 
-import java.util.Base64;
-import java.security.SecureRandom;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.web.bind.annotation.*;
 
-import tools.jackson.core.ObjectReadContext.Base;
-
 import java.util.*;
 import java.io.*;
 
 @RestController
 public class LoginController {
-    
-    // Y0u w1ll n3v3r f1gur3 m3 0ut h4h4 1m t00 3l1t3 0f 4 h4ck3r (hint)
-	// Stored credentials: username -> (salt, hash)
-	// The salt is random per-user; the hash is SHA-256(salt || password).
-
 	//private static final String storedUsername = "NotAHackerBTW";
 	//private static final String storedHashB64 = "291h1jB/C7RzwqvO1gVAIy+iilOZhg7A/rk+Nk5Yc/s=";
 
@@ -31,7 +22,15 @@ public class LoginController {
     @GetMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) throws IOException
     {
-        Scanner fileScanner = new Scanner(new File("/credentials.txt"));
+        Scanner fileScanner;
+        try //this file location should work on the container version
+        {
+            fileScanner = new Scanner(new File("/credentials.txt"));
+        } // this file location should work when running locally
+        catch(FileNotFoundException fnfe)
+        {
+            fileScanner = new Scanner(new File("credentials.txt"));
+        }
 
         String[] credentials = fileScanner.next().split(":");
 

@@ -82,7 +82,7 @@ In this implementation, when a container is redeployed it will pull the github r
 
 ## What I learned
 ### Software hardening
-There are many avenues that can be used to circumvent security measures, so it's important to consider as many as you possibly can
+Security controls can be undermined in numerous ways, so a thorough evaluation of all potential attack vectors is important.
 
 I learned how to implement
 + Hashing

@@ -11,9 +11,6 @@ import java.io.*;
 
 @RestController
 public class LoginController {
-	//private static final String storedUsername = "NotAHackerBTW";
-	//private static final String storedHashB64 = "291h1jB/C7RzwqvO1gVAIy+iilOZhg7A/rk+Nk5Yc/s=";
-
     //stored in the format of username:salt:passwordhash
     private static String storedUsername;
     private static String storedSaltB64;
@@ -67,7 +64,7 @@ public class LoginController {
         }
 
 		// constant-time comparison to avoid timing attacks
-		if (username.equals(storedUsername) && constantTimeEquals(computedHash, storedHashB64)) 
+		if (constantTimeEquals(username, storedUsername) && constantTimeEquals(computedHash, storedHashB64)) 
 		{
 			System.out.println("login Successful");
             return "Login successful!";
@@ -101,13 +98,6 @@ public class LoginController {
 
         SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
         byte[] passwordHash = skf.generateSecret(spec).getEncoded();
-
-        /*
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		md.update(salt);
-		md.update(password.getBytes("UTF-8"));
-		return Base64.getEncoder().encodeToString(md.digest());
-        */
 
         // Puts the password hash into base 64
         return Base64.getEncoder().encodeToString(passwordHash);

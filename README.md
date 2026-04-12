@@ -54,7 +54,7 @@ Surprisingly, docker was the biggest headache in this project. I have worked wit
 
 This project forced me to build Dockerfiles to create images from scratch, which was far more time consuming to learn about than I could have expected.
 
-This project also forced me to learn how to build docker compose files. This didn't take as long as learning how to build a Dockerfile, but it still did take a decent amount of time.
+This project also forced me to learn how to build docker compose files. This didn't take as long as learning how to build a Dockerfile, but still took a decent chunk of time.
 
 In order to improve refactorability, portability, and allowance for fast redeployment, I had to learn how to set up container deployments based on a Github repository. This led to multiple complications, and was overall a much more confusing process than setting up a regular container, but is also incredibly useful for production-level environments.
 

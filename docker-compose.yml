@@ -1,0 +1,18 @@
+# Defines all of the containers/services used in this project
+service:
+   # The name of this particular container/service
+   login-app:
+      # Tell compose to build the image from source instead of pulling from docker hub
+      build:
+         # Use the project root as the source for COPY commands in the Dockerfile
+         context: .
+         # Path to the Dockerfile relative to the project root
+         dockerfile: java-image/Dockerfile
+      # Map ports host:container
+      ports:
+         # Use HOST_PORT environment variable if it is set, otherwise default to port 9090
+         # This will expose port 9090 (or whichever port you specify) on the host machine and anything that is sent to that gets forwarded to port 8080 in the container
+         - "${HOST_PORT:-9090}:8080"
+      # Restart policy
+      # Restart automatically always, even if it is stopped intentionally
+      restart: always

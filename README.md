@@ -25,7 +25,7 @@ The source code for the client is contained in the `client` directory. If the se
  
 ## How does it work?
 
-Client -> Cloudflare DNS -> Nginx Reverse Proxy -> Wireguard VPN Tunnel to Firewall -> Docker Container -> Java Based HTTP Server
+`Client -> Cloudflare DNS -> Nginx Reverse Proxy -> Wireguard VPN Tunnel to Firewall -> Docker Container -> Java Based HTTP Server`
 
 + Client
     + Client will take in a username and password
@@ -33,12 +33,12 @@ Client -> Cloudflare DNS -> Nginx Reverse Proxy -> Wireguard VPN Tunnel to Firew
     + Sends the request
     + Wait for response and output message body
 + CloudFlare DNS
-    + Resolves the nginx VPS server IP based on the defined A rule and the requested URL
+    + Resolves the nginx VPS[^VPS] server IP based on the defined A rule and the requested URL
 + Nginx Reverse Proxy
     + Routes the request to the virtual machine that runs all docker containers and the exposed port on that machine for this service
     + Prevents exposure of internal network structure
 + Wireguard VPN Tunnel to Firewall
-    + Due to CGNAT limitations, my homelab has no public IPv4 address
+    + Due to CGNAT[^CGNAT] limitations, my homelab has no public IPv4 address
     + A wireguard connection between the VPS running nginx and my firewall is used to securely route all traffic to homelab environment
 + Docker Container
     + Packets are routed to the Docker container's open port \(8080 by default\)
@@ -111,3 +111,5 @@ I learned
 + How to set up a docker stack in Portainer[^Portainer] using a Github repository
 
 [^Portainer]: Portainer is a web based GUI for Docker that is hosted using a docker container. This is similar in concept to Docker Desktop for windows, however, the features and implementation are far different.
+[^VPS]: Virtual Private Server. This is a virtualized server that is hosted in the cloud that can be fully controlled by the user.
+[^CGNAT]: Carrier-Grade NAT. This is where the ISP places a second layer of NAT between your router and the internet, meaning that multiple routers (and therefore different households) are under the same public IPv4 address. In order to be accessed by the open internet, people on CGNAT need to find workarounds, such as VPN tunneling from a VPS.

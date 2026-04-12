@@ -1,8 +1,8 @@
 # Secure Login Server Using SpringBoot
 
-We were required to make a login server in my security class using Java. I wanted to take it further, so I decided to find a way to self host a server so that the credentials wouldn't be on the client's machine.
+We were required to make a login server in my security class using Java. I wanted to take it further, so I decided to find a way to self host a server so that the credentials and operations wouldn't be performed on the client's machine (and also it sounded really fun).
 
-With this setup, the server can control any rate limiting that is desired. I did not set up rate limiting, but it would be possible with this setup.
+With this setup, the server can control any rate limiting that is desired. I did not set up rate limiting in my implementation, but it would be very feasible with this setup.
 
 The source code for the server is contained in the `src/main/java/net/exclipsed/secureloginserver/controllers` directory.
 

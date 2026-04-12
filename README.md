@@ -52,7 +52,7 @@ The source code for the client is contained in the `client` directory. If the se
 
 Surprisingly, docker was the biggest headache in this project. I have worked with docker many times before, however my previous experience was limited to images already on Docker Hub, and I only ever made minor changes to those images.
 
-This project forced me to build images from scratch, which was far more time consuming to learn about than I could have expected.
+This project forced me to build Dockerfiles to create images from scratch, which was far more time consuming to learn about than I could have expected.
 
 This project also forced me to learn how to build docker compose files. This didn't take as long as learning how to build a Dockerfile, but it still did take a decent amount of time.
 

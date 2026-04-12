@@ -33,4 +33,5 @@ build/
 .vscode/
 
 ### Credentials File ###
-credentials.txt
+# Removed from the .gitignore because it was the only way to do this without storing the credentials.txt file on the system running Docker. I did not want to do this because I wanted this to be portable for proof of concept purposes.
+#credentials.txt

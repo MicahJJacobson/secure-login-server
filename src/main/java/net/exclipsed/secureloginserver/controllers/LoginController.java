@@ -19,6 +19,11 @@ public class LoginController {
     @GetMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) throws IOException
     {
+        // Input validation to prevent DoS attacks
+        if (password.length() > 256 || username.length() > 64) 
+        {
+            return "Login unsuccessful";
+        }
         Scanner fileScanner;
         try //this file location should work on the container version
         {

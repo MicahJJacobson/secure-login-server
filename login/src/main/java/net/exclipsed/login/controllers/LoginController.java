@@ -20,20 +20,28 @@ public class LoginController {
 	//private static final String STORED_USERNAME = "NotAHackerBTW";
 	//private static final String STORED_HASH_B64 = "291h1jB/C7RzwqvO1gVAIy+iilOZhg7A/rk+Nk5Yc/s=";
 
-    private static final String STORED_USERNAME = "username";
-	private static final String STORED_HASH_B64 = "password";
+    private static final String STORED_USERNAME = "ImAHackerBTW";
+    private static final String STORED_SALT_B64 = "44MhG4rW8BFORno0JMYbrw==";
+	private static final String STORED_HASH_B64 = "3sPe58KF40NQdN+hES/kUn5hWf10HDNGoRYXdCNppys=";
 
     @GetMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password)
     {
 		String computedHash = "";
+        /*
+        byte[] saltBytes = new byte[16];
+        new SecureRandom().nextBytes(saltBytes);
 
+        salt = Base64.getEncoder().encodeToString(saltBytes);
+        System.out.println("salt: " + salt);
+        */
 
 
         // hash the password
         try
         {
             computedHash = hash(password);
+            System.out.println("pass: " + computedHash);
         }
         catch(TypeMismatchException tme)
         {
@@ -71,8 +79,7 @@ public class LoginController {
 
 	private static String hash(String password) throws Exception 
 	{
-        byte[] salt = new byte[16];
-        new SecureRandom().nextBytes(salt);
+        byte[] salt = Base64.getDecoder().decode(STORED_SALT_B64);
 
         PBEKeySpec spec = new PBEKeySpec(
             //310_000 is for readability, java ignores the underscores
@@ -89,9 +96,8 @@ public class LoginController {
 		return Base64.getEncoder().encodeToString(md.digest());
         */
 
-        // Concatenates the salt and password hash and puts them into base64
-        return Base64.getEncoder().encodeToString(salt) + ":" 
-             + Base64.getEncoder().encodeToString(passwordHash);
+        // Puts the password hash into base 64
+        return Base64.getEncoder().encodeToString(passwordHash);
 	}
 
 	private static boolean constantTimeEquals(String a, String b) 

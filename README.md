@@ -8,7 +8,7 @@ The source code for the server is contained in the `src/main/java/net/exclipsed/
 
 The source code for the client is contained in the `client` directory. If the server is still up on my local hardware, this is the only thing you need to download in order to make a login attempt. It will prompt you for a username and a password, separated by a space.
 
-## Security Controls Implemented
+## <a id="my-anchor">security-controls-implemented</a>
 + Hashing
     + Used PBKDF2 as the hashing algorithm in order to slow down brute force attacks if the attacker were to ever gain access to the hashes.
 + Salting
@@ -22,6 +22,31 @@ The source code for the client is contained in the `client` directory. If the se
 + Input Validation
     + Ensures that the username and password entered are less than 64 and 256 characters long respectively.
     + Without this, DoS attacks would be possible if the user entered a 10MB password for example, which would need to be iterated over 310,000 times.
+ 
+## How does it work?
+
+Client -> Cloudflare DNS -> Nginx Reverse Proxy -> Wireguard VPN Tunnel to Firewall -> Docker Container -> Java Based HTTP Server
+
++ Client
+    + Client will take in a username and password
+    + Builds an HTTP GET request using the username and password as parameters
+    + Sends the request
+    + Wait for response and output message body
++ CloudFlare DNS
+    + Resolves the nginx VPS server IP based on the defined A rule and the requested URL
++ Nginx Reverse Proxy
+    + Routes the request to the virtual machine that runs all docker containers and the exposed port on that machine for this service
+    + Prevents exposure of internal network structure
++ Wireguard VPN Tunnel to Firewall
+    + Due to CGNAT limitations, my homelab has no public IPv4 address
+    + A wireguard connection between the VPS running nginx and my firewall is used to securely route all traffic to homelab environment
++ Docker Container
+    + Packets are routed to the Docker container's open port \(8080 by default\)
++ Java Based HTTP Server
+    + SpringBoot was used to create a Java based HTTP server
+    + All logic and calculations are performed on this server
+        + See [security controls implemented](#security-controls-implemented) for more information
+    + Sends a response back to the client indicating whether or not their login attempt was successful
  
 ## Possible Improvements
 + Nonce Implementation

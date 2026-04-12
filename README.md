@@ -6,7 +6,7 @@ With this setup, the server can control any rate limiting that is desired. I did
 
 The source code for the server is contained in the `src/main/java/net/exclipsed/secureloginserver/controllers` directory.
 
-The source code for the client is container in the `client` directory. If the server is still being hosted, this is the only thing you need to download in order to make a login attempt. It will prompt you for a username and a password, separated by a space.
+The source code for the client is contained in the `client` directory. If the server is still up on my local hardware, this is the only thing you need to download in order to make a login attempt. It will prompt you for a username and a password, separated by a space.
 
 ## Security Controls Implemented
 + Hashing

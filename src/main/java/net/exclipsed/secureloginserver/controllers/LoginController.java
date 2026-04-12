@@ -60,7 +60,6 @@ public class LoginController {
         catch(Exception e)
         {
             System.out.println("An error occurred");
-            e.printStackTrace();
         }
 
 		// constant-time comparison to avoid timing attacks

@@ -31,7 +31,7 @@ public class LoginController {
     @GetMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) throws IOException
     {
-        Scanner fileScanner = new Scanner(new File("credentials.txt"));
+        Scanner fileScanner = new Scanner(new File("/credentials.txt"));
 
         String[] credentials = fileScanner.next().split(":");
 

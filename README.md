@@ -1,6 +1,6 @@
 # Secure Login Server Using SpringBoot
 
-My Information And Computer Security class had us create a secure login program in Java. This program was meant to be fully localized to that program, where all of the operations would occur and the credentials would be stored (with the password being hashed, of course). I wanted to take it further, so I decided to find a way to host a server that would assume those duties
+My Information And Computer Security class tasked us with creating a secure login program using. This program was meant to be fully localized to that program, where all of the operations would occur and the credentials would be stored (with the password being hashed, of course). I wanted to take it further, so I decided to find a way to host a server that would assume those duties
 
 The source code for the server is contained in the `src/main/java/net/exclipsed/secureloginserver/controllers` directory.
 

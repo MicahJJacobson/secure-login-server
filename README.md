@@ -73,8 +73,8 @@ In this implementation, when a container is redeployed it will pull the github r
 + Post Request
     + Current version of the code uses a GET request, which is logged by many systems.
     + Implementation of a POST request and a request body would prevent the username and password from being logged.
-+ Postgre Database
-    + Use of a Postgre database would remove the requirement for the credentials to be stored in the container of the server.
++ Credentials Database
+    + Use of a database would remove the requirement for the credentials to be stored in the container of the server.
 + Multi-user Capabilities
     + The server can only currently check for one specific username and password. It would be cool to add the ability to check for multiple users with different usernames and passwords.
 + MFA

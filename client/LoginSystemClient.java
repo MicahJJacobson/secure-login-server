@@ -21,6 +21,7 @@ public class LoginSystemClient
         // Builds an http request using the inputted username and password 
         HttpRequest httpRequest = HttpRequest.newBuilder()
             .GET()
+            //.uri(URI.create("http://localhost:8080/login?username=" + inputUsername + "&password=" + inputPassword)) // This is used for testing locally
             .uri(URI.create("http://secureloginserver.exclipsed.net/login?username=" + inputUsername + "&password=" + inputPassword))
             .build();
         // Sends the http request and stores the http response given by the server
@@ -31,7 +32,7 @@ public class LoginSystemClient
         // 500-level something was wrong with the server. If you get this type of status code, you can re-run the exact same request to try again
         System.out.println("Status Code: " + httpResponse.statusCode());
         System.out.println("Response Headers: " + httpResponse.headers());
-        // This prints whether or not the 
+        // This prints whether or not the login attempt was successful
         System.out.println("Response Body: " + httpResponse.body());
 
         scan.close();

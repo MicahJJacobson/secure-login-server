@@ -61,7 +61,7 @@ In this implementation, when a container is redeployed it will pull the github r
 ## Possible Improvements
 + Nonce Implementation
     + The current version of the program is susceptible to replay attacks.
-    + The implementation of nonces using tick or something else would be useful.
+    + The implementation of nonces would be useful.
 + HTTPS
     + Currently, I do not have SSL certificates set up, so these requests are going over HTTP which means that if I get the right password, that password has been passed over the internet unencrypted, which is bad for obvious reasons.
 + Rate Limiting

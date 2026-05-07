@@ -7,7 +7,7 @@ RUN mvn clean package -DskipTests
 # Stage 2: Run the JAR
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/server/target/*.jar app.jar
 COPY credentials.txt /credentials.txt
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]

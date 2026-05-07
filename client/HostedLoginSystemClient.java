@@ -1,10 +1,11 @@
 import java.util.*;
 import java.net.http.*;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.io.IOException;
 import java.net.*;
 
-public class LoginSystemClient
+public class HostedLoginSystemClient
 {
     // Y0u w1ll n3v3r f1gur3 m3 0ut h4h4 1m t00 3l1t3 0f 4 h4ck3r (hint)
     public static void main(String[] args) throws IOException, InterruptedException
@@ -18,12 +19,14 @@ public class LoginSystemClient
 
         // Creates a new http client
         HttpClient httpClient = HttpClient.newHttpClient();
+
         // Builds an http request using the inputted username and password 
         HttpRequest httpRequest = HttpRequest.newBuilder()
-            .GET()
-            //.uri(URI.create("http://localhost:8080/login?username=" + inputUsername + "&password=" + inputPassword)) // This is used for testing locally
-            .uri(URI.create("http://secureloginserver.exclipsed.net/login?username=" + inputUsername + "&password=" + inputPassword))
+            .POST(BodyPublishers.ofString(inputUsername + ":" + inputPassword))
+            .uri(URI.create("http://localhost:8080/login")) // This is used for testing locally
+            //.uri(URI.create("http://secureloginserver.exclipsed.net/login")) // this is for production
             .build();
+
         // Sends the http request and stores the http response given by the server
         HttpResponse<String> httpResponse  = httpClient.send(httpRequest, BodyHandlers.ofString());
         // Prints the status code given by the application, this will indicate what happened with the request

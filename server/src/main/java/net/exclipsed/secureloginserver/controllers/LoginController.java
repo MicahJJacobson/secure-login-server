@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.io.*;
 
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+
 @RestController
 public class LoginController {
     //stored in the format of username:salt:passwordhash
@@ -17,15 +20,16 @@ public class LoginController {
 	private static String storedHashB64;
 
     @PostMapping("/login")
-    public String login(@RequestBody String body) throws IOException
+    public String login(@RequestBody String jsonIn) throws IOException
     {
 
         String usernameIn;
         String passwordIn;
-        String[] credentialsIn = body.split(":");
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(jsonIn);
 
-        usernameIn = credentialsIn[0];
-        passwordIn = credentialsIn[1];
+        usernameIn = node.get("username").asString();
+        passwordIn = node.get("password").asString();
 
         // Input validation to prevent DoS attacks
         if (passwordIn.length() > 256 || usernameIn.length() > 64) 

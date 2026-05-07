@@ -76,6 +76,11 @@ In this implementation, when a container is redeployed it will pull the github r
     + The server can only currently check for one specific username and password. It would be cool to add the ability to check for multiple users with different usernames and passwords.
 + MFA
     + Multi factor authentication would improve the security of the account, and would help mitigate risk even if the password were to leak.
++ JWT Access Tokens
+    + The server currently requires you to log in every time you run it. JWT access tokens could fix this by authorizing a user for a specified period of time.
++ Refresh Tokens
+    + Related to the JWT Access Tokens.
+    + Refresh the JWT Access Tokens of the user rather than requiring them to log in again when it expires.
 
 ## What I learned
 ### Software hardening

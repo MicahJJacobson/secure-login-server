@@ -63,16 +63,13 @@ In this implementation, when a container is redeployed it will pull the github r
     + The current version of the program is susceptible to replay attacks.
     + The implementation of nonces would be useful.
 + HTTPS
-    + Currently, I do not have SSL certificates set up, so these requests are going over HTTP which means that if I get the right password, that password has been passed over the internet unencrypted, which is bad for obvious reasons.
+    + Currently, I do not have TLS certificates set up, so these requests are going over HTTP which means that if I get the right password, that password has been passed over the internet unencrypted, which is bad for obvious reasons.
 + Rate Limiting
     + Currently there is no rate limiting in place for this server other than the speed of the hashing algorithm.
     + Possible rate limiting solutions
         + Account Lockout
         + Exponetial Delay
         + IP Lockout
-+ Post Request
-    + Current version of the code uses a GET request, which is logged by many systems.
-    + Implementation of a POST request and a request body would prevent the username and password from being logged.
 + Credentials Database
     + Use of a database would remove the requirement for the credentials to be stored in the container of the server.
 + Multi-user Capabilities
@@ -95,7 +92,7 @@ I learned how to implement
 While I've worked with and hosted HTTP servers in the past, I have only had minimal experience working with the creation of HTTP requests and have had no experience creating an actual server using code.
 
 I learned
-+ How an HTTP GET request is formatted
++ How an HTTP GET and POST request is formatted
 + How to send parameters using an HTTP Request
 + Java http library
 + SpringBoot API in Java

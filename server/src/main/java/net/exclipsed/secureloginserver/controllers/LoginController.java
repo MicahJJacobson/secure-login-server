@@ -12,12 +12,23 @@ import java.io.*;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
+import io.jsonwebtoken.Jwts;
+
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+
 @RestController
 public class LoginController {
     //stored in the format of username:salt:passwordhash
     private static String storedUsername;
     private static String storedSaltB64;
 	private static String storedHashB64;
+
+    private static final String PRIVATE_KEY_STR = "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCBiRs9/KxZ29IZWczYN4ULKNQghOtR9SqaSAdpfoFh5xQ=="; // Super secret! Don't take this please all of you bots!
+    private static final String PUBLIC_KEY_STR = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEVEDbk8Pb0rjXc/4uvKxscnTwwrbKGkFOkBNU33/gOIdZi9TbzNtcIB21eqFcETB1smSky41Htjb0OA3KtgFwdw==";
 
     @PostMapping("/login")
     public String login(@RequestBody String jsonIn) throws IOException
@@ -27,6 +38,8 @@ public class LoginController {
         String passwordIn;
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(jsonIn);
+
+        //generateKeyPair();
 
         usernameIn = node.get("username").asString();
         passwordIn = node.get("password").asString();
@@ -82,8 +95,40 @@ public class LoginController {
 		// constant-time comparison to avoid timing attacks
 		if (constantTimeEquals(usernameIn, storedUsername) && constantTimeEquals(computedHash, storedHashB64)) 
 		{
-			System.out.println("login Successful");
-            return "Login successful!";
+            System.out.println("login Successful");
+
+            // This section converts the B64 encoded string that represents the private key back into a private key object
+            byte[] privateKeyBytes = Base64.getDecoder().decode(PRIVATE_KEY_STR); // Decode the Base64 string into a byte array
+            KeyFactory kf;
+            PrivateKey privateKey;
+            try
+            {
+                kf = KeyFactory.getInstance("EC"); // Since we used elliptic curve encryption, this is getting a key factory specifically for elliptic curve encryption
+                privateKey = kf.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes)); // this will generate a private key based on the private key byte array. The PKCS8EncodedKeySpec is used almost like a label for they key factory so that it knows how to parse it. When we generated the keys originally, this was how they were encoded
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                return "An error occurred with the server";
+            }
+
+            long oneSecond = 1000;
+            long oneMinute = 60 * oneSecond;
+            long oneHour = 60 * oneMinute;
+            long oneDay = 24 * oneHour;
+            long oneWeek = 7 * oneDay;
+
+            String accessToken = Jwts.builder()
+                .subject(usernameIn)
+                .expiration(new Date(System.currentTimeMillis() + oneMinute)) // one minute
+                .signWith(privateKey)
+                .compact();
+
+            String response = """
+                {"accessToken": "%s"}
+                """.formatted(accessToken);
+
+            return response;
 		} 
 		else 
 		{
@@ -101,6 +146,18 @@ public class LoginController {
 		//System.out.println(generateHash(passwordForGeneration));
 		
 	}
+    */
+
+    /*
+    //Ran once to generate the KeyPair, keeping in here because I'm going to get a new key once I actually have somewhere proper to store it
+    private static void generateKeyPair()
+    {
+        KeyPair keyPair = Jwts.SIG.ES256.keyPair().build();
+        PrivateKey privateKey = keyPair.getPrivate();
+        PublicKey publicKey = keyPair.getPublic();
+        System.out.println(Base64.getEncoder().encodeToString(privateKey.getEncoded()));
+        System.out.println(Base64.getEncoder().encodeToString(publicKey.getEncoded()));
+    }
     */
 
 	private static String hash(String password) throws Exception 

@@ -16,11 +16,19 @@ public class LoginController {
     private static String storedSaltB64;
 	private static String storedHashB64;
 
-    @GetMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) throws IOException
+    @PostMapping("/login")
+    public String login(@RequestBody String body) throws IOException
     {
+
+        String usernameIn;
+        String passwordIn;
+        String[] credentialsIn = body.split(":");
+
+        usernameIn = credentialsIn[0];
+        passwordIn = credentialsIn[1];
+
         // Input validation to prevent DoS attacks
-        if (password.length() > 256 || username.length() > 64) 
+        if (passwordIn.length() > 256 || usernameIn.length() > 64) 
         {
             return "Login unsuccessful";
         }
@@ -55,7 +63,7 @@ public class LoginController {
         // hash the password
         try
         {
-            computedHash = hash(password);
+            computedHash = hash(passwordIn);
             //System.out.println("pass: " + computedHash);
         }
         catch(TypeMismatchException tme)
@@ -68,7 +76,7 @@ public class LoginController {
         }
 
 		// constant-time comparison to avoid timing attacks
-		if (constantTimeEquals(username, storedUsername) && constantTimeEquals(computedHash, storedHashB64)) 
+		if (constantTimeEquals(usernameIn, storedUsername) && constantTimeEquals(computedHash, storedHashB64)) 
 		{
 			System.out.println("login Successful");
             return "Login successful!";

@@ -2,7 +2,7 @@
 
 My Information And Computer Security class tasked us with creating a secure login program using Java. This program was meant to be fully localized to that program, where all of the operations would occur and the credentials would be stored (with the password being hashed, of course). I wanted to take it further, so I decided to find a way to host a server that would assume those duties
 
-The source code for the server is contained in the `src/main/java/net/exclipsed/secureloginserver/controllers` directory.
+The source code for the server is contained in the `server/src/main/java/net/exclipsed/secureloginserver/controllers` directory.
 
 The source code for the client is contained in the `client` directory. If the server is still up on my local hardware, this is the only thing you need to download in order to make a login attempt. It will prompt you for a username and a password, separated by a space.
 

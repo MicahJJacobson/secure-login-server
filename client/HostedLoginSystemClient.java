@@ -17,20 +17,16 @@ public class HostedLoginSystemClient
         String inputUsername = scan.next();
         String inputPassword = scan.next();
 
-        
+        String body = """
+            {"username":"%s","password":"%s"}
+            """.formatted(inputUsername, inputPassword);
 
         // Creates a new http client
         HttpClient httpClient = HttpClient.newHttpClient();
 
         // Builds an http request using the inputted username and password 
         HttpRequest httpRequest = HttpRequest.newBuilder()
-            .POST(BodyPublishers.ofString(
-                "{" + 
-                    "\"username\"" + ":" + 
-                    inputUsername + "," + 
-                    "\"password\"" + ":" + 
-                    inputPassword + 
-                "}"))
+            .POST(BodyPublishers.ofString(body))
             .uri(URI.create("http://localhost:8080/login")) // This is used for testing locally
             //.uri(URI.create("http://secureloginserver.exclipsed.net/login")) // this is for production
             .build();

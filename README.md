@@ -20,6 +20,9 @@ The source code for the client is contained in the `client` directory. If the se
 + Input Validation
     + Ensures that the username and password entered are less than 64 and 256 characters long respectively.
     + Without this, DoS attacks would be possible if the user entered a 10MB password for example, which would need to be iterated over 310,000 times.
++ HTTPS
+    + Enables the login and password to be passed over an encrypted connection.
+    + Without this, any logins sent to the authentication server should be considered compromised.
  
 ## How does it work?
 
@@ -62,8 +65,6 @@ In this implementation, when a container is redeployed it will pull the github r
 + Nonce Implementation
     + The current version of the program is susceptible to replay attacks.
     + The implementation of nonces would be useful.
-+ HTTPS
-    + Currently, I do not have TLS certificates set up, so these requests are going over HTTP which means that if I get the right password, that password has been passed over the internet unencrypted, which is bad for obvious reasons.
 + Rate Limiting
     + Currently there is no rate limiting in place for this server other than the speed of the hashing algorithm.
     + Possible rate limiting solutions

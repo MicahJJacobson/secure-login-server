@@ -28,7 +28,7 @@ public class HostedLoginSystemClient
         HttpRequest httpRequest = HttpRequest.newBuilder()
             .POST(BodyPublishers.ofString(body))
             //.uri(URI.create("http://localhost:8080/login")) // This is used for testing locally
-            .uri(URI.create("http://secureloginserver.exclipsed.net/login")) // this is for production
+            .uri(URI.create("https://secureloginserver.exclipsed.net/login")) // this is for production
             .build();
 
         // Sends the http request and stores the http response given by the server
